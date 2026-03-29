@@ -1,0 +1,49 @@
+import { SanityImage } from "@/components/common/sanityImage";
+import { CalculatorBySlugQueryResult } from "@/sanity.types";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
+
+const Herobanner = ({
+  data,
+}: {
+  data: NonNullable<CalculatorBySlugQueryResult>;
+}) => {
+  return (
+    <div className="bg-linear-to-t from-casual-navy -from-10% to-80% to-bright-royal-blue">
+      <div className="text-white max-width-container padding-container">
+        <div className="flex flex-col gap-10">
+          <div className="flex items-center gap-2 text-sm text-teal-grey">
+            <Link href="/" className="duration-300 hover:text-gray-500">
+              Home
+            </Link>
+            <ChevronRight size={24} className="min-w-6" />
+            <Link href="/calculators" className="truncate hover:text-gray-500">
+              Calculators
+            </Link>
+            <ChevronRight size={24} className="min-w-6" />
+            <p className="truncate text-teal-grey/60">{data.calculatorName}</p>
+          </div>
+          <div className="flex flex-wrap items-end gap-4">
+            <div className="flex items-center gap-4">
+              <SanityImage
+                src={data.icon}
+                alt={data.icon.alt}
+                width={42}
+                height={42}
+                className="object-contain w-8 h-8 shrink-0 md:w-11 md:h-11"
+              />
+              <h2 className="text-2xl font-semibold leading-[115%] md:text-4xl">
+                {data.calculatorName}
+              </h2>
+            </div>
+            <p className="text-base md:text-[18px] leading-[115%] text-teal-grey font-normal">
+              {data.description}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Herobanner;

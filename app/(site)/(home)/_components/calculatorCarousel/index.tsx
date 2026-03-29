@@ -1,0 +1,59 @@
+"use client";
+
+import Title from "@/components/common/title";
+
+import { CarouselItem } from "@/components/ui/carousel";
+import Link from "next/link";
+import { CalculatorsQueryResult } from "@/sanity.types";
+import CardCarousel from "@/components/common/cardCarousel";
+import { SanityImage } from "@/components/common/sanityImage";
+
+const CalculatorCarousel = ({
+  calculators,
+}: {
+  calculators: NonNullable<CalculatorsQueryResult>;
+}) => {
+  return (
+    <div className="bg-casual-navy">
+      <div className="max-width-container padding-container">
+        <div className="flex flex-col gap-6">
+          <Title title={"Financial Calculators"} className="text-white" />
+        </div>
+      </div>
+      <div>
+        <CardCarousel>
+          {calculators.map((calculator) => (
+            <div key={calculator._id} className="basis-1/5">
+              <CarouselItem className="">
+                <Link
+                  href={`/calculators/${calculator.slug.current}`}
+                  className="duration-300 group"
+                >
+                  <div className="w-full mb-6">
+                    <SanityImage
+                      src={calculator.icon}
+                      alt={calculator.icon.alt}
+                      width={50}
+                      height={100}
+                      className="object-contain"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <h2 className="text-[18px] sm:text-xl font-semibold group-hover:text-deep-bright-red text-white duration-300 leading-[115%]">
+                      {calculator.calculatorName}
+                    </h2>
+                    <p className="text-white text-sm sm:text-base font-medium leading-[115%]">
+                      {calculator.description}
+                    </p>
+                  </div>
+                </Link>
+              </CarouselItem>
+            </div>
+          ))}
+        </CardCarousel>
+      </div>
+    </div>
+  );
+};
+
+export default CalculatorCarousel;
