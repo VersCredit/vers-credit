@@ -116,7 +116,7 @@ const RichText: React.FC<Props> = ({
             {value && (
               <SanityImage
                 src={value}
-                alt={value.alt || "VerseCredit"}
+                alt={value.alt || "VersCredit"}
                 width={1000}
                 height={1000}
                 className="object-contain w-full m-0 max-h-125"
