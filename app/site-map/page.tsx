@@ -7,7 +7,7 @@ import SitemapCalculators from "./_components/siteMapCalculators";
 import { CalculatorsQueryResult, SiteMapQueryResult } from "@/sanity.types";
 
 export const metadata = {
-  title: "VerseCredit: Sitemap",
+  title: "VersCredit: Sitemap",
   description: "Simple website sitemap for easy navigation",
 };
 

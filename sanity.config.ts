@@ -24,8 +24,8 @@ const singletonActions = new Set<string>([
 ]);
 
 export default defineConfig({
-  name: "verse-credit",
-  title: "VerseCredit",
+  name: "vers-credit",
+  title: "VersCredit",
   basePath: "/studio",
   projectId,
   dataset,

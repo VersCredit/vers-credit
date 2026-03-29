@@ -23,7 +23,7 @@ const sourceSans3 = Source_Sans_3({
 });
 
 export const metadata: Metadata = {
-  title: "VerseCredit: Global & Indian Financial News at a Glance",
+  title: "VersCredit: Global & Indian Financial News at a Glance",
   description:
     "Latest finance, market, and economic news delivered clearly and accurately.",
 };
