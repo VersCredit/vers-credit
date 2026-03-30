@@ -27,7 +27,7 @@ const HeroLeft = ({
             )}
           >
             <BlogHeader
-              author={blog.author?.authorName || "verseCredit"}
+              author={blog.author?.authorName || "VersCredit"}
               date={formatDate(blog.uplodedAt || blog._updatedAt)}
               category={blog.category.label}
               title={blog.title}
