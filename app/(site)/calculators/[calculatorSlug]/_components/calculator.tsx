@@ -1,4 +1,5 @@
 import { calculators } from "@/calculators";
+import AdBanner from "@/components/common/adSense/adbanners";
 import RichText from "@/components/ui/rich-text";
 import { CalculatorBySlugQueryResult } from "@/sanity.types";
 import { ReactNode } from "react";
@@ -28,6 +29,9 @@ const Calculator = ({
             </div>
           </div>
         )}
+      </div>
+      <div className="max-width-container padding-container">
+        <AdBanner slot="5430829843" />
       </div>
       <div className="max-width-container padding-container ">
         <RichText

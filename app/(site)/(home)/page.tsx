@@ -14,6 +14,7 @@ import {
   CalculatorsQueryResult,
   HomePageQueryResult,
 } from "@/sanity.types";
+import AdBanner from "@/components/common/adSense/adbanners";
 
 export const generateMetadata = async () => {
   const { data: homePage } = await sanityFetch<
@@ -53,8 +54,20 @@ const HomePage = async () => {
   return (
     <div className="pt-16.75">
       <HeroBanner homePage={homePage} blogData={blogsData} />
+      <AdBanner
+        slot="5430829843"
+        className="max-width-container padding-container"
+      />
       <CategoriesGroup homePage={homePage} blogData={blogsData} />
+      <AdBanner
+        slot="5430829843"
+        className="max-width-container padding-container"
+      />
       <CalculatorCarousel calculators={calculators} />
+      <AdBanner
+        slot="5430829843"
+        className="max-width-container padding-container"
+      />
       <NewsBlogs homePage={homePage} />
     </div>
   );

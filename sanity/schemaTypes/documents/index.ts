@@ -1,4 +1,5 @@
 import aboutUs from "./about";
+import { Achivements } from "./achivements";
 import blog from "./blog";
 import blogAuthor from "./blogAuthor";
 import blogCategory from "./blogCategory";
@@ -7,7 +8,9 @@ import { calculator } from "./calculator";
 import { calculatorPage } from "./calculatorPage";
 import { contactUs } from "./contact-us";
 import home from "./home";
+import { privacyPolicy } from "./privacyPolicy";
 import { settings } from "./settings";
+import { TAndC } from "./tAndC";
 
 export const singletons = [
   settings,
@@ -16,6 +19,9 @@ export const singletons = [
   contactUs,
   calculatorPage,
   aboutUs,
+  privacyPolicy,
+  TAndC,
+  Achivements,
 ];
 export const multiTypes = [calculator, blogCategory, blogAuthor, blog];
 export const documents = [...singletons, ...multiTypes];

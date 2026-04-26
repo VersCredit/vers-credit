@@ -10,13 +10,7 @@ const NewsBlogs = ({
   homePage: NonNullable<HomePageQueryResult>;
 }) => {
   return (
-    <div className="relative">
-      {/* <SanityImage
-        src={homePage.newsBackgroundImage}
-        alt={homePage.newsBackgroundImage.alt}
-        fill
-        className="object-cover -z-1"
-      /> */}
+    <>
       <div className="max-width-container padding-container pb-4! md:pb-6!">
         <Title title={homePage.newsTitle} />
       </div>
@@ -32,7 +26,7 @@ const NewsBlogs = ({
           ))}
         </BlogCardCarousel>
       </div>
-    </div>
+    </>
   );
 };
 

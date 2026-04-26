@@ -1,3 +1,4 @@
+import AdBanner from "@/components/common/adSense/adbanners";
 import BlogHeader from "@/components/common/blogHeader";
 import { SanityImage } from "@/components/common/sanityImage";
 import Title from "@/components/common/title";
@@ -48,6 +49,7 @@ const CategoryPageRight = ({
           ))}
         </div>
       </div>
+      <AdBanner slot="4209247517" />
       <div className="pt-4">
         <Title title={categoryPage.otherCategoriesTitle} />
         <div className="flex flex-wrap gap-4 py-4 h-fit w-fit">

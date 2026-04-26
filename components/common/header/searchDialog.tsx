@@ -117,11 +117,11 @@ const SearchDialog = ({
       >
         <div
           className={cn(
-            "p-4 bg-white -translate-y-full w-full md:rounded-lg shadow-lg md:w-2/3 py-6 lg:w-1/2 md:p-6 max-h-screen md:h-fit md:mt-14 transition-transform ease-in-out duration-300",
+            "p-4 bg-white -translate-y-full w-full md:rounded-lg shadow-lg md:w-2/3 py-6 lg:w-1/2 md:p-6 max-h-screen md:h-fit md:mt-14 transition-transform ease-in-out duration-300 flex flex-col gap-4",
             isSearchOpen && "translate-y-0",
           )}
         >
-          <DialogHeader className="gap-4 mb-4 text-left h-fit">
+          <DialogHeader className="gap-4 text-left h-fit">
             <div className="pb-2">
               <div className="flex items-center justify-between">
                 <DialogTitle className="text-2xl font-semibold text-deep-bright-red">
@@ -149,8 +149,8 @@ const SearchDialog = ({
               />
             </div>
           </DialogHeader>
-          {searchResult.length > 0 ? (
-            <div className="flex flex-col w-full gap-4 pb-10 overflow-y-scroll custom-scrollbar md:mt-4 max-h-120 md:min-h-80 md:max-h-80 no-scrollbar">
+          {searchResult.length > 0 ?
+            <div className="flex flex-col w-full max-h-full gap-4 overflow-y-scroll custom-scrollbar md:min-h-80 md:max-h-80 no-scrollbar">
               {searchResult.map((blog, index) => (
                 <DialogClose key={blog._id} asChild>
                   <Link
@@ -181,11 +181,10 @@ const SearchDialog = ({
                 </DialogClose>
               ))}
             </div>
-          ) : (
-            <div className="h-full mt-4 md:max-h-80 md:min-h-80">
+          : <div className="h-full md:max-h-80 md:min-h-80">
               <p>No match found.</p>
             </div>
-          )}
+          }
         </div>
       </DialogContent>
     </Dialog>

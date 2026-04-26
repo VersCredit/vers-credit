@@ -22,7 +22,7 @@ const BlogHeader = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("flex flex-col gap-1", className)}>
+    <div className={cn("flex flex-col justify-between gap-1", className)}>
       <h4
         className={cn(
           "text-sm sm:text-base font-semibold uppercase text-deep-bright-red leading-[115%]",

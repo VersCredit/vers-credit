@@ -14,7 +14,7 @@ const Footer = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
             alt={data.footerLogo.alt}
             width={100}
             height={100}
-            className="object-contain"
+            className="object-contain h-[50px] sm:h-[56px] w-auto"
           />
         </Link>
         <div className="grid grid-cols-1 gap-10 mt-10 md:grid-cols-2 md:gap-20 ">
@@ -31,21 +31,16 @@ const Footer = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
               </Link>
             </div>
           </div>
-          <div className="flex flex-col gap-3">
-            <h4 className="text-subtle-white text-[22px] font-medium">
-              {data.footerLinksTitle}
-            </h4>
-            <div className="flex flex-col gap-3">
-              {data.footerLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={`/${link.url}`}
-                  className="text-subtle-white shrink-0 text-[18px] hover:text-deep-bright-red duration-300"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
+          <div className="flex flex-col justify-between gap-3 md:flex-row">
+            {data.footerLinks.map((link) => (
+              <Link
+                key={link.label}
+                href={`${link.url}`}
+                className="text-subtle-white shrink-0 text-[18px] hover:text-deep-bright-red duration-300"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>

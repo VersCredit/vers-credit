@@ -69,7 +69,7 @@ const Header = ({
             alt={data.headerLogo.alt}
             width={100}
             height={100}
-            className="object-contain"
+            className="object-contain h-[44px] sm:h-[50px] w-auto"
           />
         </Link>
         {typeof window !== "undefined" && !isMobile && (

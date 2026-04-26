@@ -1,3 +1,4 @@
+import AdBanner from "@/components/common/adSense/adbanners";
 import BlogHeader from "@/components/common/blogHeader";
 import { SanityImage } from "@/components/common/sanityImage";
 import Title from "@/components/common/title";
@@ -43,6 +44,7 @@ const HeroRight = ({
             </div>
           </Link>
         ))}
+        {/* <AdBanner slot="4209247517" className="max-w-full" /> */}
       </div>
     </div>
   );

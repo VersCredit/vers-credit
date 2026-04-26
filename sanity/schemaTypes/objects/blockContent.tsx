@@ -29,7 +29,7 @@ export const commonRichFields = [
         {
           title: "Super Script",
           value: "superscript",
-          icon: () => Superscript,
+          icon: () => <Superscript />,
           component: ({ children }: { children: React.ReactNode }) => (
             <span>
               <sup>{children}</sup>
@@ -40,7 +40,7 @@ export const commonRichFields = [
         {
           title: "Highlighted Text",
           value: "highlightedText",
-          icon: () => AArrowUp,
+          icon: () => <AArrowUp />,
           component: ({ children }: { children: React.ReactNode }) => (
             <span className="text-xl font-bold">{children}</span>
           ),

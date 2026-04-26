@@ -15,7 +15,7 @@ const NewsCard = ({
       className="flex flex-col overflow-hidden group "
     >
       <BlogHeader
-        className="pb-4 bg-white sm:pb-6 h-30 sm:h-36"
+        className="pb-4 bg-white sm:pb-6 h-34 sm:h-36"
         author={blog.author.authorName}
         category={blog.category.label}
         date={formatDate(blog.uplodedAt || blog._updatedAt)}

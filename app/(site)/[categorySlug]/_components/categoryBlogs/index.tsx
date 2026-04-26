@@ -5,6 +5,7 @@ import BlogHeader from "@/components/common/blogHeader";
 import Link from "next/link";
 import { BlogCategoryPageQueryResult } from "@/sanity.types";
 import { SanityImage } from "@/components/common/sanityImage";
+import AdBanner from "@/components/common/adSense/adbanners";
 
 function CategoryBlogs({
   blogs,
@@ -48,6 +49,7 @@ function CategoryBlogs({
           </Link>
         ))}
       </div>
+      <AdBanner slot="6452267478" />
       {blogs.slice(2).map((blog, index) => (
         <div
           key={blog._id}

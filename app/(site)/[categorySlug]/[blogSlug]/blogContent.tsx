@@ -5,6 +5,7 @@ import useActiveHeading from "@/hooks/useActiveHeading";
 import { cn, slugify } from "@/lib/utils";
 import BlogTop from "./blogTop";
 import { BlockContent, BlogBySlugQueryResult } from "@/sanity.types";
+import AdBanner from "@/components/common/adSense/adbanners";
 
 const extractTableContentData = (content: BlockContent) => {
   return content
@@ -42,27 +43,30 @@ const BlogContent = ({
       <BlogTop blog={blog} />
       <div className="max-width-container padding-container text-tuatara">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-6">
-          <div className="md:col-span-2 ">
-            <div className="sticky pb-2 border-b border-gray-300 top-20">
-              <h4 className="pb-2 mb-2 text-xl font-semibold border-b border-gray-300">
-                Table of Content
-              </h4>
-              <ul className="flex flex-col gap-2 py-1 ">
-                {tableOfContent.length > 0 &&
-                  tableOfContent.map((tableIndex) => (
-                    <li
-                      role="button"
-                      key={tableIndex.id}
-                      onClick={() => handleScroll(tableIndex.id)}
-                      className={cn(
-                        "duration-300 hover:text-deep-bright-red cursor-pointer font-medium",
-                        activeId === tableIndex.id && "text-deep-bright-red",
-                      )}
-                    >
-                      {tableIndex.title}
-                    </li>
-                  ))}
-              </ul>
+          <div className="md:col-span-2">
+            <div className="sm:sticky sm:top-24">
+              <div className="pb-2 border-b border-gray-300 ">
+                <h4 className="pb-2 mb-2 text-xl font-semibold border-b border-gray-300">
+                  Table of Content
+                </h4>
+                <ul className="flex flex-col gap-2 py-1 ">
+                  {tableOfContent.length > 0 &&
+                    tableOfContent.map((tableIndex) => (
+                      <li
+                        role="button"
+                        key={tableIndex.id}
+                        onClick={() => handleScroll(tableIndex.id)}
+                        className={cn(
+                          "duration-300 hover:text-deep-bright-red cursor-pointer font-medium",
+                          activeId === tableIndex.id && "text-deep-bright-red",
+                        )}
+                      >
+                        {tableIndex.title}
+                      </li>
+                    ))}
+                </ul>
+              </div>
+              <AdBanner slot="5430829843" />
             </div>
           </div>
           <div className="md:col-span-4 md:pl-6 prose-h2:mt-8! md:border-l md:border-gray-300">
