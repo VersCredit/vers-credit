@@ -227,6 +227,36 @@ export type Calculator = {
   orderRank?: string;
 };
 
+export type Achivements = {
+  _id: string;
+  _type: "achivements";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  achivementsTitle: string;
+  achivementsContent: BlockContent;
+};
+
+export type TAndC = {
+  _id: string;
+  _type: "tAndC";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  tAndCTitle: string;
+  tAndCContent: BlockContent;
+};
+
+export type PrivacyPolicy = {
+  _id: string;
+  _type: "privacyPolicy";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  privacyPolicyTitle: string;
+  privacyPolicyContent: BlockContent;
+};
+
 export type AboutUs = {
   _id: string;
   _type: "aboutUs";
@@ -550,6 +580,9 @@ export type AllSanitySchemaTypes =
   | BlogAuthor
   | BlogCategory
   | Calculator
+  | Achivements
+  | TAndC
+  | PrivacyPolicy
   | AboutUs
   | TextColor
   | CalculatorPage
@@ -939,7 +972,7 @@ export type CalculatorBySlugQueryResult = {
 
 // Source: sanity/lib/query.ts
 // Variable: settingsQuery
-// Query: *[_id == 'settings' && _type == 'settings'][0]{        ...,    }
+// Query: *[_id == 'settings' && _type == 'settings'][0]{        ...,        "calculators": *[ _type == 'calculator']{            _id,            calculatorName,            "slug": slug.current,        },        "topics": *[ _type == "blogCategory"]{            _id,            label,            "slug": slug.current,        },    }
 export type SettingsQueryResult = {
   _id: "settings";
   _type: "settings";
@@ -986,6 +1019,16 @@ export type SettingsQueryResult = {
       _key: string;
     } & Link
   >;
+  calculators: Array<{
+    _id: string;
+    calculatorName: string;
+    slug: string;
+  }>;
+  topics: Array<{
+    _id: string;
+    label: string;
+    slug: string;
+  }>;
 } | null;
 
 // Source: sanity/lib/query.ts
@@ -1264,7 +1307,7 @@ declare module "@sanity/client" {
     "\n*[_type == 'calculator']{\n    ...,\n}\n": CalculatorsQueryResult;
     "\n*[_type == 'calculatorPage'][0]{\n    ...,\n    \"calculatorList\": *[_type == 'calculator']{\n        _id,\n        icon,\n        calculatorName,\n        description,\n        slug,\n    }\n}\n": CalculatorPageQueryResult;
     "\n    *[_type == 'calculator' && slug.current == $calculatorSlug][0]{\n        ...,\n    }\n": CalculatorBySlugQueryResult;
-    "\n    *[_id == 'settings' && _type == 'settings'][0]{\n        ...,\n    }\n": SettingsQueryResult;
+    '\n    *[_id == \'settings\' && _type == \'settings\'][0]{\n        ...,\n        "calculators": *[ _type == \'calculator\']{\n            _id,\n            calculatorName,\n            "slug": slug.current,\n        },\n        "topics": *[ _type == "blogCategory"]{\n            _id,\n            label,\n            "slug": slug.current,\n        },\n    }\n': SettingsQueryResult;
     "\n    *[_type == 'blogCategory']{\n        ...,\n    }\n": BlogCategoriesQueryResult;
     "\n    *[_id == 'blogAuthor' && _type == 'blogAuthor']{\n        ...,\n    }\n": BlogAuthorsQueryResult;
     "\n    *[_type == 'blogCategoryPage'][0]{\n        ...,\n        recommandedBlogs[] -> {\n            ...,\n            author ->,\n            category -> \n        },\n        \"category\": *[_type == 'blogCategory' && slug.current == $categorySlug][0]{...,},\n        \"blogList\": *[_type == 'blog' && category->slug.current == $categorySlug]{\n            ...,\n            category->,\n            author->,\n        },\n        \"otherCategories\": *[ _type == 'blogCategory' && slug.current != $categorySlug]{\n            ...,\n            'blogCount': count(*[_type == 'blog' && references(^._id)])\n        }\n    }\n": BlogCategoryPageQueryResult;

@@ -49,16 +49,24 @@ function CategoryBlogs({
           </Link>
         ))}
       </div>
-      <AdBanner slot="6452267478" />
+      <div className="w-full max-sm:-ml-4">
+        <AdBanner slot="1301479151" />
+      </div>
       {blogs.slice(2).map((blog, index) => (
-        <div
-          key={blog._id}
-          className={cn(
-            "py-6",
-            index !== blogs.length - 3 && "border-b border-gray-300",
+        <div key={blog._id}>
+          <div
+            className={cn(
+              "py-6",
+              index !== blogs.length - 3 && "border-b border-gray-300",
+            )}
+          >
+            <CategoryPageBlogCard blog={blog} />
+          </div>
+          {index !== 0 && index % 5 === 0 && (
+            <div className="w-full max-sm:-ml-4">
+              <AdBanner slot="6452267478" />
+            </div>
           )}
-        >
-          <CategoryPageBlogCard blog={blog} />
         </div>
       ))}
     </>

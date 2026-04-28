@@ -73,6 +73,16 @@ export const calculatorBySlugQuery = groq`
 export const settingsQuery = groq`
     *[_id == 'settings' && _type == 'settings'][0]{
         ...,
+        "calculators": *[ _type == 'calculator']{
+            _id,
+            calculatorName,
+            "slug": slug.current,
+        },
+        "topics": *[ _type == "blogCategory"]{
+            _id,
+            label,
+            "slug": slug.current,
+        },
     }
 `;
 

@@ -49,7 +49,9 @@ const CategoryPageRight = ({
           ))}
         </div>
       </div>
-      <AdBanner slot="4209247517" />
+      <div className="max-sm:-ml-4">
+        <AdBanner slot="4209247517" />
+      </div>
       <div className="pt-4">
         <Title title={categoryPage.otherCategoriesTitle} />
         <div className="flex flex-wrap gap-4 py-4 h-fit w-fit">

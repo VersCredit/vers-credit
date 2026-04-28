@@ -17,16 +17,10 @@ import { Button } from "@/components/ui/button";
 import { ContactPageQueryResult } from "@/sanity.types";
 
 const contactFormSchema = z.object({
-  firstName: z
-    .string()
-    .min(3, "Minimum 3 characters required")
-    .nonempty("Required"),
-  lastName: z
-    .string()
-    .min(3, "Minimum 3 characters required")
-    .nonempty("Required"),
+  firstName: z.string().min(1, "Required").nonempty("Required"),
+  lastName: z.string().min(1, "Required").nonempty("Required"),
   email: z.email("Please enter valid email.").nonempty("Required"),
-  phoneNo: z
+  contactNo: z
     .string()
     .regex(/^\d+$/, "Please enter valid number")
     .min(10, "Must be 10 digit long")
@@ -44,7 +38,7 @@ const ContactForm = ({
       firstName: "",
       lastName: "",
       email: "",
-      phoneNo: "",
+      contactNo: "",
       message: "",
     },
     resolver: zodResolver(contactFormSchema),
@@ -120,11 +114,11 @@ const ContactForm = ({
               )}
             />
             <FormField
-              name="phoneNo"
+              name="contactNo"
               control={control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone No.</FormLabel>
+                  <FormLabel>Contact No.</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>

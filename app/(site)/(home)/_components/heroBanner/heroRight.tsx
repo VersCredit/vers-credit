@@ -12,9 +12,9 @@ const HeroRight = ({
   homePage: NonNullable<HomePageQueryResult>;
 }) => {
   return (
-    <div className="flex flex-col gap-6 pt-6 lg:pt-0 lg:pb-10">
+    <div className="flex flex-col gap-6 pt-6 max-w-fit lg:pt-0 lg:pb-10">
       <Title title={homePage.heroRightTitle} />
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 max-w-fit">
         {homePage.heroRightBlogs.map((blog, index) => (
           <Link
             href={`/${blog.category.slug.current}/${blog.slug.current}`}
@@ -44,7 +44,9 @@ const HeroRight = ({
             </div>
           </Link>
         ))}
-        {/* <AdBanner slot="4209247517" className="max-w-full" /> */}
+      </div>
+      <div className="max-sm:-ml-4">
+        <AdBanner slot="4209247517" />
       </div>
     </div>
   );

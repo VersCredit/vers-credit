@@ -13,7 +13,7 @@ const AboutUsPage = async () => {
     query: aboutUspageQuery,
   });
   return (
-    <div className="pt-16.5">
+    <div>
       <Herobanner data={data} />
       <About data={data} />
       <OurPurpose data={data} />

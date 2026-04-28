@@ -52,23 +52,23 @@ const HomePage = async () => {
   >({ query: calculatorsQuery });
 
   return (
-    <div className="pt-16.75">
+    <div>
       <HeroBanner homePage={homePage} blogData={blogsData} />
-      <AdBanner
-        slot="5430829843"
-        className="max-width-container padding-container"
-      />
+      <div className=" max-width-container max-sm:px-0! padding-container">
+        <AdBanner slot="5430829843" />
+      </div>
       <CategoriesGroup homePage={homePage} blogData={blogsData} />
-      <AdBanner
-        slot="5430829843"
-        className="max-width-container padding-container"
-      />
+      <div className=" max-width-container max-sm:px-0! padding-container">
+        <AdBanner slot="5430829843" />
+      </div>
       <CalculatorCarousel calculators={calculators} />
-      <AdBanner
-        slot="5430829843"
-        className="max-width-container padding-container"
-      />
+      <div className=" max-width-container max-sm:px-0! padding-container">
+        <AdBanner slot="1301479151" />
+      </div>
       <NewsBlogs homePage={homePage} />
+      <div className=" max-width-container max-sm:px-0! padding-container">
+        <AdBanner slot="5430829843" />
+      </div>
     </div>
   );
 };

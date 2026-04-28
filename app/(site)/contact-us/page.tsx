@@ -33,7 +33,7 @@ const ContactUs = async () => {
   }
 
   return (
-    <div className="pt-16.5">
+    <div>
       <HeroBanner contactPage={contactPage} />
       <ContactForm contactPage={contactPage} />
     </div>

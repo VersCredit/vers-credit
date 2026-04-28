@@ -61,7 +61,7 @@ const Header = ({
   const isMobile = screenSize <= 768;
 
   return (
-    <div className="fixed top-0 left-0 w-full z-100 bg-casual-navy">
+    <div className="sticky top-0 left-0 w-full z-100 bg-casual-navy">
       <div className="flex items-center justify-between p-4 max-width-container md:px-10 text-sandstone ">
         <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
           <SanityImage

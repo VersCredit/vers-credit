@@ -46,7 +46,7 @@ const BlogPage = async ({
   });
 
   return (
-    <div className="pt-16.75 ">
+    <div>
       <div className="py-6! font-medium max-width-container padding-container">
         <div className="flex items-center gap-2 text-gray-500">
           <Link href="/" className="duration-300 hover:text-gray-700">

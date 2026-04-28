@@ -33,7 +33,7 @@ const CalculatorsPage = async () => {
     return notFound();
   }
   return (
-    <div className="pt-16.75 font-inter">
+    <div>
       <Herobanner calculatorsPage={calculatorsPage} />
       <CalculatorsList calculatorsList={calculatorsPage.calculatorList} />
     </div>

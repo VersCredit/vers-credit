@@ -51,7 +51,7 @@ const CalculatorPage = async ({
   }
 
   return (
-    <div className="pt-16.75">
+    <div>
       <Herobanner data={data} />
       <Calculator data={data} calculatorSlug={calculatorSlug} />
     </div>

@@ -12,11 +12,11 @@ export const POST = async (req: NextRequest) => {
         { status: 401 },
       );
     }
-    const { firstName, lastName, email, phoneNo, message } = formData;
-    const from = process.env.RESEND_MAIL_FROM;
+    const { firstName, lastName, email, contactNo, message } = formData;
+    // const from = process.env.RESEND_MAIL_FROM;
     const to = process.env.RESEND_MAIL_TO;
 
-    if (!from?.trim() || !to?.trim()) {
+    if (!email || !to?.trim()) {
       return NextResponse.json(
         {
           success: false,
@@ -27,9 +27,9 @@ export const POST = async (req: NextRequest) => {
     }
 
     const { error } = await resend.emails.send({
-      from: from,
+      from: email,
       to: [to],
-      subject: "Contact form submission",
+      subject: "Contact form submission for VersCredit",
       replyTo: email,
       html: `<div className="font-mono">
       <h2>Contact form submission</h2>
@@ -47,7 +47,7 @@ export const POST = async (req: NextRequest) => {
       </div>
       <div className="flex items-center gap-2">
         <strong>Phone no:</strong>
-        <span>${phoneNo}</span>
+        <span>${contactNo}</span>
       </div>
       <div className="flex items-center gap-2">
         <strong>Message:</strong>

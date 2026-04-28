@@ -11,7 +11,7 @@ const HeroBanner = ({
 }) => {
   return (
     <div className="max-width-container padding-container">
-      <div className="grid gap-8 lg:grid-cols-3 ">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <HeroLeft title={homePage.heroLeftTitle} blogData={blogData} />
         </div>
