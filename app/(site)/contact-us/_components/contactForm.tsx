@@ -15,7 +15,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { ContactPageQueryResult } from "@/sanity.types";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const contactFormSchema = z.object({
@@ -35,6 +35,11 @@ const ContactForm = ({
 }: {
   contactPage: NonNullable<ContactPageQueryResult>;
 }) => {
+  const [submitMessage, setSubmitMessage] = useState<{
+    success: boolean;
+    msg: string;
+  } | null>();
+  const submitMsgTimeoutRef = useRef<NodeJS.Timeout>(null);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const form = useForm({
     defaultValues: {
@@ -47,10 +52,13 @@ const ContactForm = ({
     resolver: zodResolver(contactFormSchema),
   });
 
-  const { handleSubmit, control } = form;
+  const { handleSubmit, control, reset } = form;
 
   const onSubmit = async (data: FieldValues) => {
     try {
+      if (submitMsgTimeoutRef.current) {
+        clearTimeout(submitMsgTimeoutRef.current);
+      }
       setIsSubmitting(true);
       const res = await fetch("/api/send-email", {
         body: JSON.stringify(data),
@@ -60,11 +68,25 @@ const ContactForm = ({
       const response = await res.json();
       if (!response.success) {
         console.error(response.message);
+        setSubmitMessage({
+          success: false,
+          msg: "Error Sending email, please try again later",
+        });
       }
+      setSubmitMessage({ success: true, msg: "Email sent Successfully." });
     } catch (error) {
       console.error(error);
+      setSubmitMessage({
+        success: false,
+        msg: "Error Sending email, please try again later",
+      });
     } finally {
       setIsSubmitting(false);
+      reset();
+      submitMsgTimeoutRef.current = setTimeout(
+        () => setSubmitMessage(null),
+        5000,
+      );
     }
   };
 
@@ -149,10 +171,23 @@ const ContactForm = ({
                 </FormItem>
               )}
             />
-            <div className="md:col-span-2">
-              <Button className={cn("cursor-pointer")} disabled={isSubmitting}>
+            <div className="flex flex-col gap-4 md:col-span-2">
+              <Button
+                className={cn("cursor-pointer w-fit")}
+                disabled={isSubmitting}
+              >
                 {isSubmitting ? "Submitting...." : "Submit"}
               </Button>
+              {submitMessage && (
+                <p
+                  className={cn(
+                    "text-sm",
+                    submitMessage.success ? "text-green-600" : "text-red-600",
+                  )}
+                >
+                  {submitMessage.msg}
+                </p>
+              )}
             </div>
           </form>
         </Form>
