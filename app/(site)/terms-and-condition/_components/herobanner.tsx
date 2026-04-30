@@ -1,10 +1,6 @@
-import { AboutUspageQueryResult } from "@/sanity.types";
+import { TAndCPageQueryResult } from "@/sanity.types";
 
-const Herobanner = ({
-  data,
-}: {
-  data: NonNullable<AboutUspageQueryResult>;
-}) => {
+const Herobanner = ({ data }: { data: NonNullable<TAndCPageQueryResult> }) => {
   return (
     <div className="bg-bright-royal-blue">
       <div className="max-width-container padding-container min-h-60">

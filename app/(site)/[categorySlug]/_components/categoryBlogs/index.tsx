@@ -49,7 +49,7 @@ function CategoryBlogs({
           </Link>
         ))}
       </div>
-      <div className="w-full max-sm:-ml-4">
+      <div className="w-full">
         <AdBanner slot="1301479151" />
       </div>
       {blogs.slice(2).map((blog, index) => (
@@ -63,7 +63,7 @@ function CategoryBlogs({
             <CategoryPageBlogCard blog={blog} />
           </div>
           {index !== 0 && index % 5 === 0 && (
-            <div className="w-full max-sm:-ml-4">
+            <div className="w-full">
               <AdBanner slot="6452267478" />
             </div>
           )}

@@ -15,6 +15,8 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { ContactPageQueryResult } from "@/sanity.types";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 const contactFormSchema = z.object({
   firstName: z.string().min(1, "Required").nonempty("Required"),
@@ -33,6 +35,7 @@ const ContactForm = ({
 }: {
   contactPage: NonNullable<ContactPageQueryResult>;
 }) => {
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const form = useForm({
     defaultValues: {
       firstName: "",
@@ -48,6 +51,7 @@ const ContactForm = ({
 
   const onSubmit = async (data: FieldValues) => {
     try {
+      setIsSubmitting(true);
       const res = await fetch("/api/send-email", {
         body: JSON.stringify(data),
         method: "POST",
@@ -59,6 +63,8 @@ const ContactForm = ({
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -144,7 +150,9 @@ const ContactForm = ({
               )}
             />
             <div className="md:col-span-2">
-              <Button className="cursor-pointer">Submit</Button>
+              <Button className={cn("cursor-pointer")} disabled={isSubmitting}>
+                {isSubmitting ? "Submitting...." : "Submit"}
+              </Button>
             </div>
           </form>
         </Form>

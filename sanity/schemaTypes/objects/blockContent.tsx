@@ -1,5 +1,11 @@
-import { AArrowUp, HighlighterIcon, Superscript } from "lucide-react";
+import {
+  AArrowUp,
+  HighlighterIcon,
+  Megaphone,
+  Superscript,
+} from "lucide-react";
 import { defineField, defineType } from "sanity";
+import { component } from "sanity/structure";
 
 export const commonRichFields = [
   {
@@ -97,6 +103,26 @@ const blockContent = defineType({
       name: "styledTable",
       type: "styledTable",
       validation: (Rule) => Rule.required(),
+    },
+    {
+      name: "adSlot",
+      type: "object",
+      title: "Ad Slot",
+      icon: Megaphone,
+      fields: [
+        defineField({
+          name: "adTitle",
+          type: "string",
+          hidden: true,
+        }),
+      ], // no fields = nothing editable
+      preview: {
+        prepare() {
+          return {
+            title: "Ad Slot",
+          };
+        },
+      },
     },
   ],
 });

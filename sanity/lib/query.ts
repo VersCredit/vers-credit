@@ -160,3 +160,19 @@ export const siteMapQuery = groq`
         },
     }
 `;
+
+export const privacyPolicyPageQuery = groq`
+    *[ _type == 'privacyPolicy' && _type == "privacyPolicy"][0]{
+        ...,
+}
+`;
+export const disclaimerPageQuery = groq`
+    *[ _type == 'disclaimer' && _type == "disclaimer"][0]{
+        ...,
+}
+`;
+export const tAndCPageQuery = groq`
+    *[ _type == 'tAndC' && _type == "tAndC"][0]{
+        ...,
+}
+`;

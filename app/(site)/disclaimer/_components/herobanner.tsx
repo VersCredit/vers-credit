@@ -1,9 +1,9 @@
-import { AboutUspageQueryResult } from "@/sanity.types";
+import { DisclaimerPageQueryResult } from "@/sanity.types";
 
 const Herobanner = ({
   data,
 }: {
-  data: NonNullable<AboutUspageQueryResult>;
+  data: NonNullable<DisclaimerPageQueryResult>;
 }) => {
   return (
     <div className="bg-bright-royal-blue">

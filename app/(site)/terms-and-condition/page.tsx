@@ -1,12 +1,12 @@
 import { sanityFetch } from "@/sanity/lib/live";
-import { aboutUspageQuery } from "@/sanity/lib/query";
+import { tAndCPageQuery } from "@/sanity/lib/query";
 import Herobanner from "./_components/herobanner";
-import About from "./_components/about";
-import { AboutUspageQueryResult } from "@/sanity.types";
+import About from "./_components/tAndC";
+import { TAndCPageQueryResult } from "@/sanity.types";
 
 const AboutUsPage = async () => {
-  const { data } = await sanityFetch<NonNullable<AboutUspageQueryResult>>({
-    query: aboutUspageQuery,
+  const { data } = await sanityFetch<NonNullable<TAndCPageQueryResult>>({
+    query: tAndCPageQuery,
   });
   return (
     <div>

@@ -1,9 +1,9 @@
-import { AboutUspageQueryResult } from "@/sanity.types";
+import { PrivacyPolicyPageQueryResult } from "@/sanity.types";
 
 const Herobanner = ({
   data,
 }: {
-  data: NonNullable<AboutUspageQueryResult>;
+  data: NonNullable<PrivacyPolicyPageQueryResult>;
 }) => {
   return (
     <div className="bg-bright-royal-blue">

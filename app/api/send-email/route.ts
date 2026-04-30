@@ -27,8 +27,8 @@ export const POST = async (req: NextRequest) => {
     }
 
     const { error } = await resend.emails.send({
-      from: email,
-      to: [to],
+      from: to,
+      to: to,
       subject: "Contact form submission for VersCredit",
       replyTo: email,
       html: `<div className="font-mono">

@@ -1,5 +1,5 @@
 import { Settings } from "lucide-react";
-import { defineField, defineType } from "sanity";
+import { defineField, defineType, validation } from "sanity";
 
 export const settings = defineType({
   name: "settings",
@@ -117,20 +117,28 @@ export const settings = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "footerLinksTitle",
-      title: "Footer Links Title",
-      type: "string",
-      group: "footer",
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "footerLinks",
+      name: "footerLinksGroups",
       type: "array",
       title: "Footer Links",
       group: "footer",
       of: [
         {
-          type: "link",
+          type: "object",
+          fields: [
+            defineField({
+              name: "title",
+              title: "Title",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "linksList",
+              title: "Links List",
+              type: "array",
+              of: [{ type: "link", validation: (Rule) => Rule.required() }],
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
           validation: (Rule) => Rule.required(),
         },
       ],

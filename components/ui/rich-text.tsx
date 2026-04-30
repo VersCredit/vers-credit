@@ -3,6 +3,7 @@ import { PortableText } from "next-sanity";
 import Link from "next/link";
 import React from "react";
 import { SanityImage } from "../common/sanityImage";
+import AdBanner from "../common/adSense/adbanners";
 
 interface Props {
   content: Array<any> | undefined;
@@ -28,7 +29,7 @@ const RichText: React.FC<Props> = ({
   highlightedTextClassName,
 }) => {
   const combinedClassNames = cn(
-    "prose prose-li:my-0 prose-li:pl-0 max-w-none prose-h:my-2! text-tuatara prose-h5:leading-[115%] prose-h4:leading-[115%] prose-h3:leading-[115%] prose-h2:leading-[115%] prose-h1:leading-[115%] prose-p:leading-[115%] prose-ol:leading-[115%] prose-ul:leading-[115%]",
+    "prose prose-li:my-0 prose-li:pl-0 max-w-none prose-h:my-2! text-tuatara prose-h5:leading-[115%] prose-h4:leading-[115%] prose-h3:leading-[115%] prose-h2:leading-[115%] prose-h1:leading-[115%] prose-p:leading-[115%] prose-ol:leading-[115%] prose-ul:leading-[115%] prose-h3:text-tuatara",
     className,
   );
 
@@ -161,6 +162,11 @@ const RichText: React.FC<Props> = ({
           </div>
         );
       },
+      adSlot: () => (
+        <div className="max-w-full py-2">
+          <AdBanner slot="3164705646" />
+        </div>
+      ),
     },
   };
 

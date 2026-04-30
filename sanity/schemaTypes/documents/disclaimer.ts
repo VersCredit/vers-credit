@@ -1,11 +1,11 @@
-import { Handshake } from "lucide-react";
+import { TriangleAlert } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
-export const tAndC = defineType({
-  name: "tAndC",
-  title: "Terms & Condition",
+export const disclaimer = defineType({
+  name: "disclaimer",
+  title: "Disclaimer",
   type: "document",
-  icon: Handshake,
+  icon: TriangleAlert,
   groups: [
     { name: "seo", title: "Seo" },
     { name: "herobanner", title: "Herobanner" },
@@ -27,9 +27,10 @@ export const tAndC = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "tAndCContent",
-      title: "Terms And Condition Content",
+      name: "disclaimerContent",
+      title: "Disclaimer Content",
       type: "blockContent",
+      group: "disclaimer",
       validation: (Rule) => Rule.required(),
     }),
   ],

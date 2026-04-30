@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/chart";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { capitalizeFirstLetter, formatINR } from "@/lib/utils";
+import AdBanner from "@/components/common/adSense/adbanners";
 
 const DEFAULT_INVESTMENT = 10000;
 const DEFAULT_RETURN_RATE = 12;
@@ -168,6 +169,9 @@ const MFReturnsCalculator = () => {
         maturity={maturity}
       />
       <div className="w-full h-px bg-pale-silver" />
+      <div>
+        <AdBanner slot="3164705646" />
+      </div>
       <div className="grid items-start grid-cols-1 gap-6 lg:grid-cols-5 font-source-sans-3">
         <Card className="order-2 w-full h-full gap-0 py-6 border rounded-md shadow-none lg:order-1 lg:col-span-3 max-h-100 border-pale-silver">
           <ChartContainer

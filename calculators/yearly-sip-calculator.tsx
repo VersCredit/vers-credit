@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/chart";
 import { Bar, BarChart, XAxis } from "recharts";
 import { capitalizeFirstLetter, formatINR } from "@/lib/utils";
+import AdBanner from "@/components/common/adSense/adbanners";
 
 const DEFAULT_YEARLY_INVESTMENT = 10000;
 const DEFAULT_RETURN_RATE = 12;
@@ -171,6 +172,9 @@ const YearlySIPCalculator = () => {
         maturity={maturity}
       />
       <div className="w-full h-px bg-pale-silver" />
+      <div>
+        <AdBanner slot="3164705646" />
+      </div>
       <div className="grid items-start grid-cols-1 gap-6 lg:grid-cols-5">
         <Card className="order-2 w-full h-full gap-0 p-0 border rounded-md shadow-none lg:order-1 lg:col-span-3 max-h-100 border-pale-silver">
           <ChartContainer

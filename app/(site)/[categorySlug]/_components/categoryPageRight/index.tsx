@@ -49,7 +49,7 @@ const CategoryPageRight = ({
           ))}
         </div>
       </div>
-      <div className="max-sm:-ml-4">
+      <div>
         <AdBanner slot="4209247517" />
       </div>
       <div className="pt-4">

@@ -49,6 +49,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/disclaimer`,
+      lastModified: new Date(),
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/privacy-policy`,
+      lastModified: new Date(),
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/terms-and-condition`,
+      lastModified: new Date(),
+      priority: 0.8,
+    },
   ];
 
   const categoryRoutes = data.map((category) => ({

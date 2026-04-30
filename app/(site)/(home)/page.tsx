@@ -54,19 +54,19 @@ const HomePage = async () => {
   return (
     <div>
       <HeroBanner homePage={homePage} blogData={blogsData} />
-      <div className=" max-width-container max-sm:px-0! padding-container">
+      <div className="max-width-container padding-container">
         <AdBanner slot="5430829843" />
       </div>
       <CategoriesGroup homePage={homePage} blogData={blogsData} />
-      <div className=" max-width-container max-sm:px-0! padding-container">
+      <div className=" max-width-container padding-container">
         <AdBanner slot="5430829843" />
       </div>
       <CalculatorCarousel calculators={calculators} />
-      <div className=" max-width-container max-sm:px-0! padding-container">
+      <div className=" max-width-container padding-container">
         <AdBanner slot="1301479151" />
       </div>
       <NewsBlogs homePage={homePage} />
-      <div className=" max-width-container max-sm:px-0! padding-container">
+      <div className=" max-width-container padding-container">
         <AdBanner slot="5430829843" />
       </div>
     </div>

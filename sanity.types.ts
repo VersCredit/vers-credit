@@ -104,6 +104,11 @@ export type BlockContent = Array<
   | ({
       _key: string;
     } & StyledTable)
+  | {
+      adTitle?: string;
+      _type: "adSlot";
+      _key: string;
+    }
 >;
 
 export type Seo = {
@@ -227,14 +232,15 @@ export type Calculator = {
   orderRank?: string;
 };
 
-export type Achivements = {
+export type Disclaimer = {
   _id: string;
-  _type: "achivements";
+  _type: "disclaimer";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  achivementsTitle: string;
-  achivementsContent: BlockContent;
+  seo: Seo;
+  herobannerTitle: string;
+  disclaimerContent: BlockContent;
 };
 
 export type TAndC = {
@@ -243,7 +249,8 @@ export type TAndC = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  tAndCTitle: string;
+  seo: Seo;
+  herobannerTitle: string;
   tAndCContent: BlockContent;
 };
 
@@ -253,6 +260,8 @@ export type PrivacyPolicy = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  seo: Seo;
+  herobannerTitle: string;
   privacyPolicyTitle: string;
   privacyPolicyContent: BlockContent;
 };
@@ -265,47 +274,8 @@ export type AboutUs = {
   _rev: string;
   seo: Seo;
   herobannerTitle: string;
-  herobannerImage: {
-    asset: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt: string;
-    _type: "image";
-  };
   aboutTitle: string;
   aboutContent: BlockContent;
-  purposeTitle: string;
-  purposeContent: BlockContent;
-  whatWeOfferTitle: string;
-  whatWeOfferItems: Array<{
-    title: string;
-    content: BlockContent;
-    image: {
-      asset: SanityImageAssetReference;
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt: string;
-      _type: "image";
-    };
-    _key: string;
-  }>;
-  ourPhilosophyAndVisionItems: Array<{
-    title: string;
-    content: BlockContent;
-    image: {
-      asset: SanityImageAssetReference;
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt: string;
-      _type: "image";
-    };
-    _key: string;
-  }>;
-  clarificationTitle: string;
-  clarificationContent: BlockContent;
 };
 
 export type TextColor = {
@@ -439,12 +409,15 @@ export type Settings = {
     url: Link;
     _key: string;
   }>;
-  footerLinksTitle: string;
-  footerLinks: Array<
-    {
-      _key: string;
-    } & Link
-  >;
+  footerLinksGroups: Array<{
+    title: string;
+    linksList: Array<
+      {
+        _key: string;
+      } & Link
+    >;
+    _key: string;
+  }>;
 };
 
 export type HighlightColor = {
@@ -580,7 +553,7 @@ export type AllSanitySchemaTypes =
   | BlogAuthor
   | BlogCategory
   | Calculator
-  | Achivements
+  | Disclaimer
   | TAndC
   | PrivacyPolicy
   | AboutUs
@@ -737,47 +710,8 @@ export type AboutUspageQueryResult = {
   _rev: string;
   seo: Seo;
   herobannerTitle: string;
-  herobannerImage: {
-    asset: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt: string;
-    _type: "image";
-  };
   aboutTitle: string;
   aboutContent: BlockContent;
-  purposeTitle: string;
-  purposeContent: BlockContent;
-  whatWeOfferTitle: string;
-  whatWeOfferItems: Array<{
-    title: string;
-    content: BlockContent;
-    image: {
-      asset: SanityImageAssetReference;
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt: string;
-      _type: "image";
-    };
-    _key: string;
-  }>;
-  ourPhilosophyAndVisionItems: Array<{
-    title: string;
-    content: BlockContent;
-    image: {
-      asset: SanityImageAssetReference;
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt: string;
-      _type: "image";
-    };
-    _key: string;
-  }>;
-  clarificationTitle: string;
-  clarificationContent: BlockContent;
 } | null;
 
 // Source: sanity/lib/query.ts
@@ -1013,12 +947,15 @@ export type SettingsQueryResult = {
     url: Link;
     _key: string;
   }>;
-  footerLinksTitle: string;
-  footerLinks: Array<
-    {
-      _key: string;
-    } & Link
-  >;
+  footerLinksGroups: Array<{
+    title: string;
+    linksList: Array<
+      {
+        _key: string;
+      } & Link
+    >;
+    _key: string;
+  }>;
   calculators: Array<{
     _id: string;
     calculatorName: string;
@@ -1295,6 +1232,49 @@ export type SiteMapQueryResult = Array<{
   }>;
 }>;
 
+// Source: sanity/lib/query.ts
+// Variable: privacyPolicyPageQuery
+// Query: *[ _type == 'privacyPolicy' && _type == "privacyPolicy"][0]{        ...,}
+export type PrivacyPolicyPageQueryResult = {
+  _id: string;
+  _type: "privacyPolicy";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  seo: Seo;
+  herobannerTitle: string;
+  privacyPolicyTitle: string;
+  privacyPolicyContent: BlockContent;
+} | null;
+
+// Source: sanity/lib/query.ts
+// Variable: disclaimerPageQuery
+// Query: *[ _type == 'disclaimer' && _type == "disclaimer"][0]{        ...,}
+export type DisclaimerPageQueryResult = {
+  _id: string;
+  _type: "disclaimer";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  seo: Seo;
+  herobannerTitle: string;
+  disclaimerContent: BlockContent;
+} | null;
+
+// Source: sanity/lib/query.ts
+// Variable: tAndCPageQuery
+// Query: *[ _type == 'tAndC' && _type == "tAndC"][0]{        ...,}
+export type TAndCPageQueryResult = {
+  _id: string;
+  _type: "tAndC";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  seo: Seo;
+  herobannerTitle: string;
+  tAndCContent: BlockContent;
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -1315,5 +1295,8 @@ declare module "@sanity/client" {
     "\n    *[ _type == 'blog' ] | order(coalesce(uplodedAt, _updatedAt) desc){\n        ...,\n        author ->,\n        category -> \n    }\n": BlogsQueryResult;
     "\n    *[_type == 'contact_us' && _id == 'contact_us'][0]{\n        ...,\n    }\n": ContactPageQueryResult;
     '\n    *[_type == \'blogCategory\']{\n        _id,\n        "title": label,\n        "slug": slug.current,\n        "blogs": *[_type == "blog" && references(^._id)]{\n            title,\n            "slug": slug.current,\n            "categorySlug": category->slug.current,\n            _updatedAt\n        },\n    }\n': SiteMapQueryResult;
+    "\n    *[ _type == 'privacyPolicy' && _type == \"privacyPolicy\"][0]{\n        ...,\n}\n": PrivacyPolicyPageQueryResult;
+    "\n    *[ _type == 'disclaimer' && _type == \"disclaimer\"][0]{\n        ...,\n}\n": DisclaimerPageQueryResult;
+    "\n    *[ _type == 'tAndC' && _type == \"tAndC\"][0]{\n        ...,\n}\n": TAndCPageQueryResult;
   }
 }

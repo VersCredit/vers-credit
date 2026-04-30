@@ -21,7 +21,6 @@ export const link = defineType({
       name: "openInNewTab",
       title: "Open In New Tab",
       type: "boolean",
-      validation: (Rule) => Rule.required(),
     }),
   ],
 });

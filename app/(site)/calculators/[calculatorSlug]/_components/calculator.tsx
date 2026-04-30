@@ -27,11 +27,11 @@ const Calculator = ({
               </h4>
               {calculator}
             </div>
+            <div className="p-2">
+              <AdBanner slot="5430829843" />
+            </div>
           </div>
         )}
-      </div>
-      <div className="max-width-container padding-container">
-        <AdBanner slot="5430829843" />
       </div>
       <div className="max-width-container padding-container ">
         <RichText
