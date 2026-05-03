@@ -160,8 +160,6 @@ export type Blog = {
   author: BlogAuthorReference;
   category: BlogCategoryReference;
   uplodedAt?: string;
-  postedToX?: boolean;
-  xPostStatus?: string;
   orderRank?: string;
 };
 
@@ -578,7 +576,7 @@ export type AllSanitySchemaTypes =
 
 // Source: sanity/lib/query.ts
 // Variable: homePageQuery
-// Query: *[_type == 'home' && _id == 'home'][0]{        ...,        heroRightBlogs[] -> {         ...,          author ->,          category ->         },        categoryGroup[]{            ...,            categories[] ->,        },        newsBlogs[] -> {          ...,          author ->,          category ->         },    }
+// Query: *[_type == 'home' && _id == 'home'][0]{        ...,        "latestBlogs": * [ _type == "blog" ] | order(coalesce(uploadedAt, _createdAt))[0...3]{                _id,                    _createdAt,                    title,                    slug,                    description,                    heroImage,                    author->{                        _id,                        authorName                    },                    category->{                        _id,                        label,                        slug                    },                    uplodedAt        },        heroRightBlogs[] -> {         ...,          author ->,          category ->         },        categoryGroup[]{            ...,            categories[] ->{                ...,                "blogs": *[ _type == "blog" && category._ref == ^._id ] | order(coalesce(uplodedAt, _createdAt) desc)[0...10]{                    _id,                    _createdAt,                    title,                    slug,                    description,                    heroImage,                    author->{                        _id,                        authorName                    },                    category->{                        _id,                        label,                        slug                    },                    uplodedAt                }            },        },        newsBlogs[] -> {          ...,          author ->,          category ->         },    }
 export type HomePageQueryResult = {
   _id: "home";
   _type: "home";
@@ -627,8 +625,6 @@ export type HomePageQueryResult = {
       orderRank?: string;
     };
     uplodedAt?: string;
-    postedToX?: boolean;
-    xPostStatus?: string;
     orderRank?: string;
   }>;
   categoryGroup: Array<{
@@ -642,6 +638,31 @@ export type HomePageQueryResult = {
       label: string;
       slug: Slug;
       orderRank?: string;
+      blogs: Array<{
+        _id: string;
+        _createdAt: string;
+        title: string;
+        slug: Slug;
+        description: string;
+        heroImage: {
+          asset: SanityImageAssetReference;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt: string;
+          _type: "image";
+        };
+        author: {
+          _id: string;
+          authorName: string;
+        };
+        category: {
+          _id: string;
+          label: string;
+          slug: Slug;
+        };
+        uplodedAt: string | null;
+      }>;
     }>;
     _key: string;
   }>;
@@ -693,9 +714,32 @@ export type HomePageQueryResult = {
       orderRank?: string;
     };
     uplodedAt?: string;
-    postedToX?: boolean;
-    xPostStatus?: string;
     orderRank?: string;
+  }>;
+  latestBlogs: Array<{
+    _id: string;
+    _createdAt: string;
+    title: string;
+    slug: Slug;
+    description: string;
+    heroImage: {
+      asset: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+    author: {
+      _id: string;
+      authorName: string;
+    };
+    category: {
+      _id: string;
+      label: string;
+      slug: Slug;
+    };
+    uplodedAt: string | null;
   }>;
 } | null;
 
@@ -756,14 +800,12 @@ export type BlogsByCategoryQueryResult = Array<{
     orderRank?: string;
   };
   uplodedAt?: string;
-  postedToX?: boolean;
-  xPostStatus?: string;
   orderRank?: string;
 }>;
 
 // Source: sanity/lib/query.ts
 // Variable: blogBySlugQuery
-// Query: *[_type == 'blog' && slug.current == $blogSlug][0]{        ...,        author ->,        category ->,        "recommended": *[    _type == "blog" &&    slug.current != $blogSlug  ] | order(    (category._ref == ^.category._ref) desc,    _createdAt desc  )[0...4]{    _id,        title,        author->,        category->,        slug,        heroImage,        uploadedAt,        _updatedAt,  },    }
+// Query: *[_type == 'blog' && slug.current == $blogSlug][0]{        ...,        author ->,        category ->,        "recommended": *[    _type == "blog" &&    slug.current != $blogSlug  ] | order(    (category._ref == ^.category._ref) desc,    coalesce(uplodedAt, _createdAt) desc  )[0...4]{    _id,        title,        author->,        category->,        slug,        heroImage,        uploadedAt,        _updatedAt,  },    }
 export type BlogBySlugQueryResult = {
   _id: string;
   _type: "blog";
@@ -803,8 +845,6 @@ export type BlogBySlugQueryResult = {
     orderRank?: string;
   };
   uplodedAt?: string;
-  postedToX?: boolean;
-  xPostStatus?: string;
   orderRank?: string;
   recommended: Array<{
     _id: string;
@@ -1079,8 +1119,6 @@ export type BlogCategoryPageQueryResult = {
       orderRank?: string;
     };
     uplodedAt?: string;
-    postedToX?: boolean;
-    xPostStatus?: string;
     orderRank?: string;
   }>;
   otherCategoriesTitle: string;
@@ -1133,8 +1171,6 @@ export type BlogCategoryPageQueryResult = {
       orderRank?: string;
     };
     uplodedAt?: string;
-    postedToX?: boolean;
-    xPostStatus?: string;
     orderRank?: string;
   }>;
   otherCategories: Array<{
@@ -1152,7 +1188,7 @@ export type BlogCategoryPageQueryResult = {
 
 // Source: sanity/lib/query.ts
 // Variable: blogsQuery
-// Query: *[ _type == 'blog' ] | order(coalesce(uplodedAt, _updatedAt) desc){        ...,        author ->,        category ->     }
+// Query: *[ _type == 'blog' ] | order(coalesce(uplodedAt, _createdAt) desc){        ...,        author ->,        category ->     }
 export type BlogsQueryResult = Array<{
   _id: string;
   _type: "blog";
@@ -1192,8 +1228,6 @@ export type BlogsQueryResult = Array<{
     orderRank?: string;
   };
   uplodedAt?: string;
-  postedToX?: boolean;
-  xPostStatus?: string;
   orderRank?: string;
 }>;
 
@@ -1274,10 +1308,10 @@ export type TAndCPageQueryResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n    *[_type == 'home' && _id == 'home'][0]{\n        ...,\n        heroRightBlogs[] -> {\n         ...,\n          author ->,\n          category -> \n        },\n        categoryGroup[]{\n            ...,\n            categories[] ->,\n        },\n        newsBlogs[] -> {\n          ...,\n          author ->,\n          category -> \n        },\n    }\n": HomePageQueryResult;
+    '\n    *[_type == \'home\' && _id == \'home\'][0]{\n        ...,\n        "latestBlogs": * [ _type == "blog" ] | order(coalesce(uploadedAt, _createdAt))[0...3]{\n                _id,\n                    _createdAt,\n                    title,\n                    slug,\n                    description,\n                    heroImage,\n                    author->{\n                        _id,\n                        authorName\n                    },\n                    category->{\n                        _id,\n                        label,\n                        slug\n                    },\n                    uplodedAt\n        },\n        heroRightBlogs[] -> {\n         ...,\n          author ->,\n          category -> \n        },\n        categoryGroup[]{\n            ...,\n            categories[] ->{\n                ...,\n                "blogs": *[ _type == "blog" && category._ref == ^._id ] | order(coalesce(uplodedAt, _createdAt) desc)[0...10]{\n                    _id,\n                    _createdAt,\n                    title,\n                    slug,\n                    description,\n                    heroImage,\n                    author->{\n                        _id,\n                        authorName\n                    },\n                    category->{\n                        _id,\n                        label,\n                        slug\n                    },\n                    uplodedAt\n                }\n            },\n        },\n        newsBlogs[] -> {\n          ...,\n          author ->,\n          category -> \n        },\n    }\n': HomePageQueryResult;
     "*[_type == 'aboutUs'][0]{\n    ...,\n}": AboutUspageQueryResult;
     "\n    *[_type == 'blog' && category->slug.current == $categorySlug]{\n        ...,\n        author ->,\n        category -> \n    }\n": BlogsByCategoryQueryResult;
-    '\n    *[_type == \'blog\' && slug.current == $blogSlug][0]{\n        ...,\n        author ->,\n        category ->,\n        "recommended": *[\n    _type == "blog" &&\n    slug.current != $blogSlug\n  ] | order(\n    (category._ref == ^.category._ref) desc,\n    _createdAt desc\n  )[0...4]{\n    _id,\n        title,\n        author->,\n        category->,\n        slug,\n        heroImage,\n        uploadedAt,\n        _updatedAt,\n  },\n    }\n': BlogBySlugQueryResult;
+    '\n    *[_type == \'blog\' && slug.current == $blogSlug][0]{\n        ...,\n        author ->,\n        category ->,\n        "recommended": *[\n    _type == "blog" &&\n    slug.current != $blogSlug\n  ] | order(\n    (category._ref == ^.category._ref) desc,\n    coalesce(uplodedAt, _createdAt) desc\n  )[0...4]{\n    _id,\n        title,\n        author->,\n        category->,\n        slug,\n        heroImage,\n        uploadedAt,\n        _updatedAt,\n  },\n    }\n': BlogBySlugQueryResult;
     "\n    *[_type == 'blogCategory' && slug.current == $categorySlug][0]{\n        ...,\n    }\n": BlogCategoryBySlugQueryResult;
     "\n*[_type == 'calculator']{\n    ...,\n}\n": CalculatorsQueryResult;
     "\n*[_type == 'calculatorPage'][0]{\n    ...,\n    \"calculatorList\": *[_type == 'calculator']{\n        _id,\n        icon,\n        calculatorName,\n        description,\n        slug,\n    }\n}\n": CalculatorPageQueryResult;
@@ -1286,7 +1320,7 @@ declare module "@sanity/client" {
     "\n    *[_type == 'blogCategory']{\n        ...,\n    }\n": BlogCategoriesQueryResult;
     "\n    *[_id == 'blogAuthor' && _type == 'blogAuthor']{\n        ...,\n    }\n": BlogAuthorsQueryResult;
     "\n    *[_type == 'blogCategoryPage'][0]{\n        ...,\n        recommandedBlogs[] -> {\n            ...,\n            author ->,\n            category -> \n        },\n        \"category\": *[_type == 'blogCategory' && slug.current == $categorySlug][0]{...,},\n        \"blogList\": *[_type == 'blog' && category->slug.current == $categorySlug]{\n            ...,\n            category->,\n            author->,\n        },\n        \"otherCategories\": *[ _type == 'blogCategory' && slug.current != $categorySlug]{\n            ...,\n            'blogCount': count(*[_type == 'blog' && references(^._id)])\n        }\n    }\n": BlogCategoryPageQueryResult;
-    "\n    *[ _type == 'blog' ] | order(coalesce(uplodedAt, _updatedAt) desc){\n        ...,\n        author ->,\n        category -> \n    }\n": BlogsQueryResult;
+    "\n    *[ _type == 'blog' ] | order(coalesce(uplodedAt, _createdAt) desc){\n        ...,\n        author ->,\n        category -> \n    }\n": BlogsQueryResult;
     "\n    *[_type == 'contact_us' && _id == 'contact_us'][0]{\n        ...,\n    }\n": ContactPageQueryResult;
     '\n    *[_type == \'blogCategory\']{\n        _id,\n        "title": label,\n        "slug": slug.current,\n        "blogs": *[_type == "blog" && references(^._id)]{\n            title,\n            "slug": slug.current,\n            "categorySlug": category->slug.current,\n            _updatedAt\n        },\n    }\n': SiteMapQueryResult;
     "\n    *[ _type == 'privacyPolicy' && _type == \"privacyPolicy\"][0]{\n        ...,\n}\n": PrivacyPolicyPageQueryResult;

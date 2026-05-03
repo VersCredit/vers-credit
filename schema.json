@@ -870,20 +870,6 @@
         },
         "optional": true
       },
-      "postedToX": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "boolean"
-        },
-        "optional": true
-      },
-      "xPostStatus": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
       "orderRank": {
         "type": "objectAttribute",
         "value": {

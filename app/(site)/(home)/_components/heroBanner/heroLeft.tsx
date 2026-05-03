@@ -6,18 +6,15 @@ import { BlogsQueryResult, HomePageQueryResult } from "@/sanity.types";
 import Link from "next/link";
 
 const HeroLeft = ({
-  title,
-  blogData,
+  homePage,
 }: {
-  title: NonNullable<HomePageQueryResult>["heroLeftTitle"];
-  blogData: NonNullable<BlogsQueryResult>;
+  homePage: NonNullable<HomePageQueryResult>;
 }) => {
-  const latestBlogs = blogData.slice(0, 3);
   return (
     <div className="flex flex-col gap-4 lg:pb-10 lg:border-gray-300 lg:pr-8 lg:border-r">
-      <Title title={title} />
+      <Title title={homePage.heroLeftTitle} />
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-        {latestBlogs.map((blog, index) => (
+        {homePage.latestBlogs.map((blog, index) => (
           <Link
             href={`/${blog.category.slug.current}/${blog.slug.current}`}
             key={blog._id}
@@ -28,7 +25,7 @@ const HeroLeft = ({
           >
             <BlogHeader
               author={blog.author?.authorName || "VersCredit"}
-              date={formatDate(blog.uplodedAt || blog._updatedAt)}
+              date={formatDate(blog.uplodedAt || blog._createdAt)}
               category={blog.category.label}
               title={blog.title}
               titleClassname={cn(

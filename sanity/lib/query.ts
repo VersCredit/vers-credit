@@ -3,6 +3,24 @@ import groq from "groq";
 export const homePageQuery = groq`
     *[_type == 'home' && _id == 'home'][0]{
         ...,
+        "latestBlogs": * [ _type == "blog" ] | order(coalesce(uploadedAt, _createdAt) desc)[0...3]{
+                _id,
+                    _createdAt,
+                    title,
+                    slug,
+                    description,
+                    heroImage,
+                    author->{
+                        _id,
+                        authorName
+                    },
+                    category->{
+                        _id,
+                        label,
+                        slug
+                    },
+                    uplodedAt
+        },
         heroRightBlogs[] -> {
          ...,
           author ->,
@@ -10,7 +28,27 @@ export const homePageQuery = groq`
         },
         categoryGroup[]{
             ...,
-            categories[] ->,
+            categories[] ->{
+                ...,
+                "blogs": *[ _type == "blog" && category._ref == ^._id ] | order(coalesce(uplodedAt, _createdAt) desc)[0...10]{
+                    _id,
+                    _createdAt,
+                    title,
+                    slug,
+                    description,
+                    heroImage,
+                    author->{
+                        _id,
+                        authorName
+                    },
+                    category->{
+                        _id,
+                        label,
+                        slug
+                    },
+                    uplodedAt
+                }
+            },
         },
         newsBlogs[] -> {
           ...,
@@ -42,7 +80,7 @@ export const blogBySlugQuery = groq`
     slug.current != $blogSlug
   ] | order(
     (category._ref == ^.category._ref) desc,
-    _createdAt desc
+    coalesce(uplodedAt, _createdAt) desc
   )[0...4]{
     _id,
         title,
@@ -136,7 +174,7 @@ export const blogCategoryPageQuery = groq`
 `;
 
 export const blogsQuery = groq`
-    *[ _type == 'blog' ] | order(coalesce(uplodedAt, _updatedAt) desc){
+    *[ _type == 'blog' ] | order(coalesce(uplodedAt, _createdAt) desc){
         ...,
         author ->,
         category -> 

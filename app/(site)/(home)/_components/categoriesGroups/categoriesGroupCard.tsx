@@ -1,7 +1,7 @@
 import BlogHeader from "@/components/common/blogHeader";
 import { SanityImage } from "@/components/common/sanityImage";
 import { cn, formatDate } from "@/lib/utils";
-import { BlogsQueryResult } from "@/sanity.types";
+import { HomePageQueryResult } from "@/sanity.types";
 import Link from "next/link";
 import { HTMLProps } from "react";
 
@@ -9,7 +9,7 @@ const CategoriesGroupCard = ({
   blog,
   className,
 }: {
-  blog: NonNullable<BlogsQueryResult>[number];
+  blog: NonNullable<HomePageQueryResult>["categoryGroup"][number]["categories"][number]["blogs"][number];
   className?: HTMLProps<HTMLElement>["className"];
 }) => {
   return (
@@ -28,7 +28,7 @@ const CategoriesGroupCard = ({
       </div>
       <BlogHeader
         author={blog.author.authorName}
-        date={formatDate(blog.uplodedAt || blog._updatedAt)}
+        date={formatDate(blog.uplodedAt || blog._createdAt)}
         category={blog.category.label}
         title={blog.title}
         titleClassname="group-hover:text-deep-bright-red"

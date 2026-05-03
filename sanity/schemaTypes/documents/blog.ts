@@ -90,18 +90,6 @@ const blog = defineType({
       type: "datetime",
       group: "blog",
     }),
-    defineField({
-      name: "postedToX",
-      title: "Posted To X",
-      type: "boolean",
-      group: "blog",
-    }),
-    defineField({
-      name: "xPostStatus",
-      title: "Posted To X",
-      type: "string",
-      group: "blog",
-    }),
     orderRankField({ type: "blog" }),
   ],
   preview: {

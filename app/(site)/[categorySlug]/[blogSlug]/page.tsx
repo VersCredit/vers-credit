@@ -1,14 +1,15 @@
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
-import BlogContent from "./blogContent";
+import BlogContent from "./_components/blogContent";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { blogBySlugQuery, blogsQuery } from "@/sanity/lib/query";
 import { sanityFetch } from "@/sanity/lib/live";
 import { client } from "@/sanity/lib/client";
 import { BlogBySlugQueryResult, BlogsQueryResult } from "@/sanity.types";
-import RecommandedBlogs from "./recommandedBlog";
+import RecommandedBlogs from "./_components/recommandedBlog";
 import AdBanner from "@/components/common/adSense/adbanners";
+import { urlFor } from "@/sanity/lib/image";
 
 export async function generateMetadata({
   params,
@@ -25,12 +26,18 @@ export async function generateMetadata({
   if (!blog) {
     return notFound();
   }
-
+  const image = urlFor(blog.heroImage).url();
   return {
-    title: blog.title,
-    description: blog.description,
+    title: blog.seo.seoTitle,
+    description: blog.seo.seoDescription,
     alternates: {
       canonical: `${process.env.NEXT_PUBLIC_DOMAIN_URL}/blog/${categorySlug}/${blogSlug}`,
+    },
+    openGraph: {
+      title: blog.seo.seoTitle,
+      description: blog.seo.seoDescription,
+      url: `${process.env.NEXT_PUBLIC_DOMAIN_URL}/blog/${categorySlug}/${blogSlug}`,
+      images: [image],
     },
   };
 }

@@ -2,18 +2,10 @@ import HeroBanner from "./_components/heroBanner";
 import CategoriesGroup from "./_components/categoriesGroups";
 import NewsBlogs from "./_components/newsBlogs";
 import { sanityFetch } from "@/sanity/lib/live";
-import {
-  blogsQuery,
-  calculatorsQuery,
-  homePageQuery,
-} from "@/sanity/lib/query";
+import { calculatorsQuery, homePageQuery } from "@/sanity/lib/query";
 import { notFound } from "next/navigation";
 import CalculatorCarousel from "./_components/calculatorCarousel";
-import {
-  BlogsQueryResult,
-  CalculatorsQueryResult,
-  HomePageQueryResult,
-} from "@/sanity.types";
+import { CalculatorsQueryResult, HomePageQueryResult } from "@/sanity.types";
 import AdBanner from "@/components/common/adSense/adbanners";
 
 export const generateMetadata = async () => {
@@ -43,21 +35,17 @@ const HomePage = async () => {
     query: homePageQuery,
   });
 
-  const { data: blogsData } = await sanityFetch<NonNullable<BlogsQueryResult>>({
-    query: blogsQuery,
-  });
-
   const { data: calculators } = await sanityFetch<
     NonNullable<CalculatorsQueryResult>
   >({ query: calculatorsQuery });
 
   return (
     <div>
-      <HeroBanner homePage={homePage} blogData={blogsData} />
+      <HeroBanner homePage={homePage} />
       <div className="max-width-container padding-container">
         <AdBanner slot="5430829843" />
       </div>
-      <CategoriesGroup homePage={homePage} blogData={blogsData} />
+      <CategoriesGroup homePage={homePage} />
       <div className=" max-width-container padding-container">
         <AdBanner slot="5430829843" />
       </div>

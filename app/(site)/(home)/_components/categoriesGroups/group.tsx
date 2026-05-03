@@ -8,14 +8,12 @@ import { useState } from "react";
 import CategoriesGroupCard from "./categoriesGroupCard";
 import { CarouselItem } from "@/components/ui/carousel";
 import CardCarousel from "../../../../../components/common/cardCarousel";
-import { BlogsQueryResult, HomePageQueryResult } from "@/sanity.types";
+import { HomePageQueryResult } from "@/sanity.types";
 
 const Group = ({
   group,
-  blogs,
 }: {
   group: NonNullable<HomePageQueryResult>["categoryGroup"][number];
-  blogs: NonNullable<BlogsQueryResult>;
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<
     | NonNullable<HomePageQueryResult>["categoryGroup"][number]["categories"][number]
@@ -47,17 +45,14 @@ const Group = ({
       <div>
         {selectedCategory && (
           <CardCarousel>
-            {blogs
-              .filter((blog) => blog.category.label === selectedCategory.label)
-              .slice(0, 7)
-              .map((blog) => (
-                <CarouselItem
-                  key={blog._id}
-                  className="basis-2/3 sm:basis-2/5 md:basis-2/7"
-                >
-                  <CategoriesGroupCard blog={blog} />
-                </CarouselItem>
-              ))}
+            {selectedCategory.blogs.map((blog) => (
+              <CarouselItem
+                key={blog._id}
+                className="basis-2/3 sm:basis-2/5 md:basis-2/7"
+              >
+                <CategoriesGroupCard blog={blog} />
+              </CarouselItem>
+            ))}
           </CardCarousel>
         )}
       </div>
