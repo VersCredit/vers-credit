@@ -121,7 +121,7 @@ export type Link = {
   _type: "link";
   label: string;
   url: string;
-  openInNewTab: boolean;
+  openInNewTab?: boolean;
 };
 
 export type BlogAuthorReference = {
@@ -763,7 +763,7 @@ export type BlogsByCategoryQueryResult = Array<{
 
 // Source: sanity/lib/query.ts
 // Variable: blogBySlugQuery
-// Query: *[_type == 'blog' && slug.current == $blogSlug][0]{        ...,        author ->,        category ->     }
+// Query: *[_type == 'blog' && slug.current == $blogSlug][0]{        ...,        author ->,        category ->,        "recommended": *[    _type == "blog" &&    slug.current != $blogSlug  ] | order(    (category._ref == ^.category._ref) desc,    _createdAt desc  )[0...4]{    _id,        title,        author->,        category->,        slug,        heroImage,        uploadedAt,        _updatedAt,  },    }
 export type BlogBySlugQueryResult = {
   _id: string;
   _type: "blog";
@@ -806,6 +806,40 @@ export type BlogBySlugQueryResult = {
   postedToX?: boolean;
   xPostStatus?: string;
   orderRank?: string;
+  recommended: Array<{
+    _id: string;
+    title: string;
+    author: {
+      _id: string;
+      _type: "blogAuthor";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      authorName: string;
+      orderRank?: string;
+    };
+    category: {
+      _id: string;
+      _type: "blogCategory";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      label: string;
+      slug: Slug;
+      orderRank?: string;
+    };
+    slug: Slug;
+    heroImage: {
+      asset: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+    uploadedAt: null;
+    _updatedAt: string;
+  }>;
 } | null;
 
 // Source: sanity/lib/query.ts
@@ -1117,45 +1151,6 @@ export type BlogCategoryPageQueryResult = {
 } | null;
 
 // Source: sanity/lib/query.ts
-// Variable: blogsByTitleSlug
-// Query: *[_type == 'blog' && title match $titleSlug + '*'] | order(_score desc){        _id,        title,        author->,        category->,        slug,        heroImage,        uploadedAt,        _updatedAt,        _score    }
-export type BlogsByTitleSlugResult = Array<{
-  _id: string;
-  title: string;
-  author: {
-    _id: string;
-    _type: "blogAuthor";
-    _createdAt: string;
-    _updatedAt: string;
-    _rev: string;
-    authorName: string;
-    orderRank?: string;
-  };
-  category: {
-    _id: string;
-    _type: "blogCategory";
-    _createdAt: string;
-    _updatedAt: string;
-    _rev: string;
-    label: string;
-    slug: Slug;
-    orderRank?: string;
-  };
-  slug: Slug;
-  heroImage: {
-    asset: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt: string;
-    _type: "image";
-  };
-  uploadedAt: null;
-  _updatedAt: string;
-  _score: null;
-}>;
-
-// Source: sanity/lib/query.ts
 // Variable: blogsQuery
 // Query: *[ _type == 'blog' ] | order(coalesce(uplodedAt, _updatedAt) desc){        ...,        author ->,        category ->     }
 export type BlogsQueryResult = Array<{
@@ -1282,7 +1277,7 @@ declare module "@sanity/client" {
     "\n    *[_type == 'home' && _id == 'home'][0]{\n        ...,\n        heroRightBlogs[] -> {\n         ...,\n          author ->,\n          category -> \n        },\n        categoryGroup[]{\n            ...,\n            categories[] ->,\n        },\n        newsBlogs[] -> {\n          ...,\n          author ->,\n          category -> \n        },\n    }\n": HomePageQueryResult;
     "*[_type == 'aboutUs'][0]{\n    ...,\n}": AboutUspageQueryResult;
     "\n    *[_type == 'blog' && category->slug.current == $categorySlug]{\n        ...,\n        author ->,\n        category -> \n    }\n": BlogsByCategoryQueryResult;
-    "\n    *[_type == 'blog' && slug.current == $blogSlug][0]{\n        ...,\n        author ->,\n        category -> \n    }\n": BlogBySlugQueryResult;
+    '\n    *[_type == \'blog\' && slug.current == $blogSlug][0]{\n        ...,\n        author ->,\n        category ->,\n        "recommended": *[\n    _type == "blog" &&\n    slug.current != $blogSlug\n  ] | order(\n    (category._ref == ^.category._ref) desc,\n    _createdAt desc\n  )[0...4]{\n    _id,\n        title,\n        author->,\n        category->,\n        slug,\n        heroImage,\n        uploadedAt,\n        _updatedAt,\n  },\n    }\n': BlogBySlugQueryResult;
     "\n    *[_type == 'blogCategory' && slug.current == $categorySlug][0]{\n        ...,\n    }\n": BlogCategoryBySlugQueryResult;
     "\n*[_type == 'calculator']{\n    ...,\n}\n": CalculatorsQueryResult;
     "\n*[_type == 'calculatorPage'][0]{\n    ...,\n    \"calculatorList\": *[_type == 'calculator']{\n        _id,\n        icon,\n        calculatorName,\n        description,\n        slug,\n    }\n}\n": CalculatorPageQueryResult;
@@ -1291,7 +1286,6 @@ declare module "@sanity/client" {
     "\n    *[_type == 'blogCategory']{\n        ...,\n    }\n": BlogCategoriesQueryResult;
     "\n    *[_id == 'blogAuthor' && _type == 'blogAuthor']{\n        ...,\n    }\n": BlogAuthorsQueryResult;
     "\n    *[_type == 'blogCategoryPage'][0]{\n        ...,\n        recommandedBlogs[] -> {\n            ...,\n            author ->,\n            category -> \n        },\n        \"category\": *[_type == 'blogCategory' && slug.current == $categorySlug][0]{...,},\n        \"blogList\": *[_type == 'blog' && category->slug.current == $categorySlug]{\n            ...,\n            category->,\n            author->,\n        },\n        \"otherCategories\": *[ _type == 'blogCategory' && slug.current != $categorySlug]{\n            ...,\n            'blogCount': count(*[_type == 'blog' && references(^._id)])\n        }\n    }\n": BlogCategoryPageQueryResult;
-    "\n    *[_type == 'blog' && title match $titleSlug + '*'] | order(_score desc){\n        _id,\n        title,\n        author->,\n        category->,\n        slug,\n        heroImage,\n        uploadedAt,\n        _updatedAt,\n        _score\n    } \n": BlogsByTitleSlugResult;
     "\n    *[ _type == 'blog' ] | order(coalesce(uplodedAt, _updatedAt) desc){\n        ...,\n        author ->,\n        category -> \n    }\n": BlogsQueryResult;
     "\n    *[_type == 'contact_us' && _id == 'contact_us'][0]{\n        ...,\n    }\n": ContactPageQueryResult;
     '\n    *[_type == \'blogCategory\']{\n        _id,\n        "title": label,\n        "slug": slug.current,\n        "blogs": *[_type == "blog" && references(^._id)]{\n            title,\n            "slug": slug.current,\n            "categorySlug": category->slug.current,\n            _updatedAt\n        },\n    }\n': SiteMapQueryResult;

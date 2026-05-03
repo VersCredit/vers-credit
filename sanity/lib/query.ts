@@ -36,7 +36,23 @@ export const blogBySlugQuery = groq`
     *[_type == 'blog' && slug.current == $blogSlug][0]{
         ...,
         author ->,
-        category -> 
+        category ->,
+        "recommended": *[
+    _type == "blog" &&
+    slug.current != $blogSlug
+  ] | order(
+    (category._ref == ^.category._ref) desc,
+    _createdAt desc
+  )[0...4]{
+    _id,
+        title,
+        author->,
+        category->,
+        slug,
+        heroImage,
+        uploadedAt,
+        _updatedAt,
+  },
     }
 `;
 
@@ -117,20 +133,6 @@ export const blogCategoryPageQuery = groq`
             'blogCount': count(*[_type == 'blog' && references(^._id)])
         }
     }
-`;
-
-export const blogsByTitleSlug = groq`
-    *[_type == 'blog' && title match $titleSlug + '*'] | order(_score desc){
-        _id,
-        title,
-        author->,
-        category->,
-        slug,
-        heroImage,
-        uploadedAt,
-        _updatedAt,
-        _score
-    } 
 `;
 
 export const blogsQuery = groq`

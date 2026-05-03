@@ -655,7 +655,7 @@
           "value": {
             "type": "boolean"
           },
-          "optional": false
+          "optional": true
         }
       }
     }

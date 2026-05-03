@@ -7,6 +7,8 @@ import { blogBySlugQuery, blogsQuery } from "@/sanity/lib/query";
 import { sanityFetch } from "@/sanity/lib/live";
 import { client } from "@/sanity/lib/client";
 import { BlogBySlugQueryResult, BlogsQueryResult } from "@/sanity.types";
+import RecommandedBlogs from "./recommandedBlog";
+import AdBanner from "@/components/common/adSense/adbanners";
 
 export async function generateMetadata({
   params,
@@ -63,7 +65,8 @@ const BlogPage = async ({
         </div>
       </div>
       <BlogContent blog={blog} />
-      {/* <RecommandedBlogs blogs={randomBlogs}/> */}
+      <AdBanner slot="5430829843" />
+      <RecommandedBlogs blogs={blog.recommended} />
     </div>
   );
 };
