@@ -38,7 +38,18 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth no-scrollbar">
       <head>
         <Script
-          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-JLPKP0M91N"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JLPKP0M91N');`}
+        </Script>
+        <Script
+          strategy="afterInteractive"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9959637639836790"
           crossOrigin="anonymous"
         />
