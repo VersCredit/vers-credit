@@ -23,8 +23,7 @@ export default function AdBanner({
   }, []);
 
   return (
-    <div className="flex flex-col w-full gap-4 bg-linear-to-b from-bright-royal-blue/70 to-bright-royal-blue/20 rounded-[5px]">
-      <p className="mx-auto text-white w-fit">Advertisement</p>
+    <div className="flex flex-col w-full rounded-[5px]">
       <div className={cn("w-full flex justify-center min-h-62.5", className)}>
         <ins
           className="adsbygoogle max-auto w-full max-w-full sm:ml-0! h-auto"
