@@ -60,7 +60,7 @@ const ContactForm = ({
         clearTimeout(submitMsgTimeoutRef.current);
       }
       setIsSubmitting(true);
-      const res = await fetch("/api/send-email", {
+      const res = await fetch("/api/send-telegram-msg", {
         body: JSON.stringify(data),
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -70,15 +70,15 @@ const ContactForm = ({
         console.error(response.message);
         setSubmitMessage({
           success: false,
-          msg: "Error Sending email, please try again later",
+          msg: "Something went wrong. Please try again later.",
         });
       }
-      setSubmitMessage({ success: true, msg: "Email sent Successfully." });
+      setSubmitMessage({ success: true, msg: "Submitted Successfully." });
     } catch (error) {
       console.error(error);
       setSubmitMessage({
         success: false,
-        msg: "Error Sending email, please try again later",
+        msg: "Something went wrong. Please try again later.",
       });
     } finally {
       setIsSubmitting(false);
